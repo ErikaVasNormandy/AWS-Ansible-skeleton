@@ -1,8 +1,13 @@
 - hosts: remote
   become: yes
   become_user: root
+
+
   tasks:
     - name: update
       yum: name=* state=latest
 
-      
+    # - name: install Nodejs
+    #   npm:
+    #     name: coffee-script
+    #     path: /app/location
