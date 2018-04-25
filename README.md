@@ -16,6 +16,7 @@ Check them out!
 
  ### 1. Make hosts file
   This will contain the public DNS address for your EC2 instance as well as the appropriate ssh key
+  ![alt text](/images/AWSDNS.png)
  ### 2. Make playbooks folder
   Organizes the directory since projects can have many different playbooks
  ### 3. Make YAML playbook
