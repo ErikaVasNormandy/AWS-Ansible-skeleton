@@ -17,10 +17,15 @@ Check them out!
  ### 1. Make hosts file
   This will contain the public DNS address for your EC2 instance as well as the appropriate ssh key
   ![alt text](/images/AWSDNS.png)
+  
+  ### 1.5 Add ssh keys .pem files to a separate folder to be added to the .gitignore. Don't forget to specify the key within the hosts file
+  
  ### 2. Make playbooks folder
   Organizes the directory since projects can have many different playbooks
+  
  ### 3. Make YAML playbook
   Just updating the instances specified in the hosts file
+![alt text](/images/Playbookfolder.png)
 
  ### 4. Add .gitignore
   DO NOT UPLOAD SSH KEYS
