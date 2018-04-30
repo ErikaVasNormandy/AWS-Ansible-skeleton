@@ -1,10 +1,20 @@
-#use this playbook to update the EC2 instance
-#note that this is the CentOS distribution of linux (yum vs apt-get)
+# ansible-playbook -i hosts ./playbooks/0_update.yml --become
+# http://docs.ansible.com/ansible/latest/modules/apt_module.html
 
-- hosts: production
+- hosts: production_ubuntu
   become: yes
   become_user: root
 
   tasks:
-    - name: update
-      yum: name=* state=latest
+    - name: apt-get update
+      apt:
+        update_cache: yes
+        cache_valid_time: 1000
+
+    - name: Update all packages to the latest version
+      apt:
+        upgrade: dist
+
+    - name: Remove useless packages from the cache
+      apt:
+        autoclean: yes

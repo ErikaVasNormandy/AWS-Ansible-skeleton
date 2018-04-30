@@ -4,7 +4,7 @@
 
 #
 
-- hosts: test_instances
+- hosts: production_ubuntu
   become: yes
   become_user: root
   tasks:
