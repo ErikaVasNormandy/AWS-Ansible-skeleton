@@ -1,3 +1,6 @@
 
 [remote]
 ec2-user@ec2-54-153-124-128.us-west-1.compute.amazonaws.com ansible_ssh_private_key_file=./keys/secondkeypair.pem
+
+[test]
+ec2-user@ec2-54-183-31-165.us-west-1.compute.amazonaws.com ansible_ssh_private_key_file=./keys/secondkeypair.pem

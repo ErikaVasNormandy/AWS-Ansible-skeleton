@@ -1,0 +1,26 @@
+#https://www.e2enetworks.com/help/knowledge-base/how-to-install-node-js-and-npm-on-centos/
+#https://stackoverflow.com/questions/43098816/how-to-display-output-of-tasks-of-an-ansible-playbook-without-using-the-v-opt
+#https://gist.github.com/komuW/b3b5d24977d4df7bd549
+
+- hosts: test
+  become: yes
+  become_user: root
+  tasks:
+    #1. Add node.js yum repo
+      - name: install gcc
+        shell: /bin/bash -c "yum install -y gcc-c++ make"
+
+      - name: nodejs yum repo
+        shell: /bin/bash -c "curl -sL https://rpm.nodesource.com/setup_6.x | sudo -E bash -"
+
+    #2. Install node.js and NPM
+      - name: install nodejs
+        yum: name=nodejs state=latest
+
+    #3. Verify versions
+      - name: Print Out Node Version
+        shell: node -v
+        register: version
+
+      - debug: var=version
+      # {{ version['stdout'] }}

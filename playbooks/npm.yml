@@ -1,17 +1,48 @@
-- hosts: remote
+- hosts: test
   become: yes
   become_user: root
-
-
   tasks:
     - name: install nvm
-      # shell: curl https://raw.githubusercontent.com/creationix/nvm/v0.13.1/install.sh | bash
-      get_url:
-        url: https://raw.githubusercontent.com/creationix/nvm/v0.13.1/install.sh
-        dest: ~/.nvm
-    
-    - name: run nvm
-      shell: source ~/.bash_profile
+      shell: curl https://raw.githubusercontent.com/creationix/nvm/v0.13.1/install.sh | bash
+      register: nvm_installed
+      ignore_errors: true
+    # - name: install nvm
+    #   get_url:
+    #     url: https://raw.githubusercontent.com/creationix/nvm/v0.13.1/install.sh
+    #     dest: ~/.nvm
+    #   register: nvm_installed
 
-    - name: get status
-      command: ls
+    - name: run nvm
+      shell: /bin/bash -c "source ~/.bash_profile"
+      # when: nvm_installed|success
+      ignore_errors: True
+      notify:
+        - curl install node
+
+
+
+    # - name: get status
+    #   command: ls
+    #   when: nvm_installed|success
+
+  handlers:
+      - name: curl install node
+        shell: curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+
+
+
+      - name: install node
+        shell:  /bin/bash -c "source ~/.nvm/nvm.sh && nvm install 0.10"
+
+      - name: bash profile
+        shell: echo "[[ -s $HOME/.nvm/nvm.sh ]] && . $HOME/.nvm/nvm.sh" >> .bash_profile  # This loads NVM
+
+      - name: install nvm via curl
+        shell: curl https://raw.githubusercontent.com/creationix/nvm/v0.13.1/install.sh | bash
+        when: nvm_installed|failed
+        ignore_errors: True
+
+
+
+
+#https://gist.github.com/komuW/b3b5d24977d4df7bd549
