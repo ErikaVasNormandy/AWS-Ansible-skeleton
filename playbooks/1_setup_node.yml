@@ -2,7 +2,9 @@
 #https://stackoverflow.com/questions/43098816/how-to-display-output-of-tasks-of-an-ansible-playbook-without-using-the-v-opt
 #https://gist.github.com/komuW/b3b5d24977d4df7bd549
 
-- hosts: EC2_CentOs
+#
+
+- hosts: production
   become: yes
   become_user: root
   tasks:

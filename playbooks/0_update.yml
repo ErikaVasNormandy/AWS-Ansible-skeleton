@@ -1,0 +1,10 @@
+#use this playbook to update the EC2 instance
+#note that this is the CentOS distribution of linux (yum vs apt-get)
+
+- hosts: production
+  become: yes
+  become_user: root
+
+  tasks:
+    - name: update
+      yum: name=* state=latest
