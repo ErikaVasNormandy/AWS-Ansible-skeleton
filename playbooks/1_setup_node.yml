@@ -4,7 +4,7 @@
 
 #
 
-- hosts: production
+- hosts: test_instances
   become: yes
   become_user: root
   tasks:
