@@ -1,5 +1,6 @@
 # ansible-playbook -i hosts ./playbooks/0_update.yml --become
 # http://docs.ansible.com/ansible/latest/modules/apt_module.html
+# https://stackoverflow.com/questions/22107610/shell-script-run-function-from-script-over-ssh
 
 - hosts: production_ubuntu
   become: yes
