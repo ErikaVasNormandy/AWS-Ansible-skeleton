@@ -1,0 +1,66 @@
+# Nginx : https://serversforhackers.com/c/an-ansible-tutorial
+# Venv: https://stackoverflow.com/questions/26402123/ansible-creating-a-virtualenv
+#        https://virtualenv.pypa.io/en/stable/userguide/#usage
+#         https://stackoverflow.com/questions/42186301/ansible-create-multiple-folders-if-dont-exist
+#         https://docs.ansible.com/ansible/2.4/pip_module.html
+# Flask : https://www.kevinlondon.com/2016/09/19/devops-from-scratch-pt-1.html
+# Gunicorn
+
+#https://www.quora.com/What-are-the-differences-between-nginx-and-gunicorn
+
+- hosts: production_ubuntu
+  become: yes
+  become_user: root
+
+  tasks:
+
+    - name: Install PM2
+      npm:
+        name: pm2
+        state: present
+        global: yes
+
+
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: installed
+        update_cache: true
+      notify:
+        - Start Nginx
+
+    ### install Pip for Python
+    - easy_install:
+        name: pip
+        state: latest
+
+    ### VENV
+    - name: create directory if they don't exist
+      file:
+        path: " {{ item }}"
+        state: directory
+      with_items:
+        - ~/WebApp/venv
+
+    ### Use Pip module to install virtualenv
+    - pip:
+        name: virtualenv
+
+    - name: create initial VirtualEnv
+      command: virtualenv ~/WebApp/venv
+
+    ### Install flask
+    - pip:
+        name: flask
+        virtualenv: ~/WebApp/venv
+
+    - pip:
+        name: gunicorn
+        virtualenv: ~/WebApp/venv
+
+
+  handlers:
+    - name: Start Nginx
+      service:
+        name: nginx
+        state: started
