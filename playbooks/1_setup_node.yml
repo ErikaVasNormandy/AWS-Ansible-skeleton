@@ -14,15 +14,6 @@
         name: nodejs
         state: latest
 
-    # - name: Apt Autoremove
-    #   apt:
-    #     autoclean: yes
-
-    # - name: install gcc
-    #   apt:
-    #     name: gcc
-    #     state: latest
-
     - name: install build-essential
       apt:
         name: build-essential
