@@ -7,23 +7,43 @@
   become_user: root
   tasks:
     - name: Download and Set Up the Correct APT Repo
-      shell: curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+      shell: curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
 
-    - name: Run Apt-get
+    - name: Install NodeJS with Apt
       apt:
         name: nodejs
         state: latest
 
-    # - name: install npm
+    # - name: Apt Autoremove
     #   apt:
-    #     name: npm
+    #     autoclean: yes
+
+    # - name: install gcc
+    #   apt:
+    #     name: gcc
     #     state: latest
+
+    - name: install build-essential
+      apt:
+        name: build-essential
+        state: present
+        # notify:
+        #   - install npm
+        # register: buildessentialinstalled
+
+    - name: install npm
+      become: yes
+      shell: sudo npm install -g npm@latest
+
+    - name: npm Version
+      shell: npm -v
+      register: version-npm
 
     - name: Print Out Node Version
       shell: node -v
       register: version
 
-    - debug: var=version
+    - debug: var=version-npm
       # {{ version['stdout'] }}
 
     # -name: ppa
